@@ -1,0 +1,83 @@
+# Build check for every push and pull request: Rust and Python tests, the .deb and
+# .rpm packages (kept as a workflow artifact), and an install test of the packages
+# on Debian, Ubuntu and Fedora.
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    env:
+      NFPM_VERSION: "2.43.0"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: daemon
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip pytest
+          curl -sSL "https://github.com/goreleaser/nfpm/releases/download/v${NFPM_VERSION}/nfpm_${NFPM_VERSION}_amd64.deb" -o /tmp/nfpm.deb
+          sudo dpkg -i /tmp/nfpm.deb
+
+      - name: Build packages
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' client/pyproject.toml)
+          PYTHON=python packaging/build-packages.sh "$version" dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: dist/*
+
+  install-test:
+    needs: build
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: debian:trixie
+            install: apt-get update && apt-get install -y ./dist/*.deb python3-pyside6.qtwidgets
+          - image: ubuntu:24.04
+            # No PySide6 packages: daemon and CLI only.
+            install: apt-get update && apt-get install -y ./dist/*.deb
+            no_gui: "1"
+          - image: fedora:latest
+            install: dnf install -y ./dist/*.rpm python3-pyside6
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: dist
+
+      # With the recommended packages, so that their names are checked too.
+      - name: Install the package
+        run: ${{ matrix.install }}
+
+      - name: Smoke test
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          silex-daemon --version
+          osl --version
+          test -x /usr/libexec/silex-usbip-helper
+          test -f /usr/share/polkit-1/actions/org.opensilexlink.policy
+          test -f /usr/share/applications/opensilexlink.desktop
+          if [ -z "${{ matrix.no_gui }}" ]; then
+            python3 -c "import sys; sys.path.insert(0, '/usr/lib/opensilexlink'); \
+              from PySide6 import QtWidgets; app = QtWidgets.QApplication([]); \
+              from opensilexlink.gui.app import MainWindow; print('GUI ok')"
+          fi
