@@ -1,0 +1,19 @@
+// polkit rule: lets administrators run the (strictly locked-down) OpenSilexLink
+// USB/IP helper WITHOUT a password. Needed because pkexec does not reliably reuse the
+// temporary "keep" authorization (auth_admin_keep) across separate invocations ->
+// without this rule it prompts for a password on every connect.
+//
+// Safe, because the helper only runs attach/detach/modprobe with strictly validated
+// arguments (see silex-usbip-helper) - much narrower than allowing "usbip" globally.
+//
+// The packages install it to /usr/share/polkit-1/rules.d/, install-privileged.sh to
+// /etc/polkit-1/rules.d/. Requires polkit >= 0.106 (JS rules). Adjust the group for
+// your distribution if needed.
+polkit.addRule(function(action, subject) {
+    if (!(subject.isInGroup("sudo") || subject.isInGroup("wheel"))) { return; }
+    if (action.id === "org.opensilexlink.manage" ||
+        (action.id === "org.freedesktop.policykit.exec" &&
+         action.lookup("program") === "/usr/libexec/silex-usbip-helper")) {
+        return polkit.Result.YES;
+    }
+});

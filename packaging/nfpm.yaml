@@ -1,0 +1,92 @@
+# nfpm config for the OpenSilexLink .deb / .rpm packages. One config builds both
+# formats; packaging/build-packages.sh runs the prerequisites (daemon release build,
+# compiled German catalog) and calls nfpm:
+#
+#   packaging/build-packages.sh 1.0.0
+#
+# ${VERSION} is expanded from the environment (set by build-packages.sh).
+
+name: opensilexlink
+arch: amd64            # nfpm maps amd64 -> x86_64 for the rpm automatically
+platform: linux
+version: ${VERSION}
+section: net
+priority: optional
+maintainer: "bytewarrior <1134981+bytewarrior@users.noreply.github.com>"
+description: |
+  Open-source Linux replacement for Silex SX Virtual Link.
+  Bridges a Silex USB device server (USB-over-Ethernet) to the kernel's USB/IP
+  stack: a userspace daemon speaks the Silex protocol, a PySide6 GUI drives it.
+  Tested against the Silex DS-510.
+vendor: "OpenSilexLink (unofficial)"
+homepage: https://github.com/bytewarrior/OpenSilexLink
+license: MIT
+
+# Only python3 is a hard dependency. Everything else is a Recommends, because the
+# package names differ between distributions (and some releases lack PySide6), and
+# a name mismatch should not block the installation:
+#   - PySide6 for the GUI (Debian/Ubuntu split it per Qt module),
+#   - usbip for the attach/detach tools,
+#   - pkexec/polkit for root-free attach/detach.
+depends:
+  - python3
+overrides:
+  deb:
+    depends:
+      - python3 (>= 3.9)
+    recommends:
+      - python3-pyside6.qtwidgets
+      - usbip
+      - pkexec
+      - polkitd
+  rpm:
+    depends:
+      - python3 >= 3.9
+    recommends:
+      - python3-pyside6
+      - usbip
+      - polkit
+
+contents:
+  # Rust daemon binary.
+  - src: ./daemon/target/release/silex-daemon
+    dst: /usr/bin/silex-daemon
+    file_info:
+      mode: 0755
+
+  # Python client (whole package tree, including the compiled .mo catalogs).
+  - src: ./client/src/opensilexlink
+    dst: /usr/lib/opensilexlink/opensilexlink
+    type: tree
+
+  # CLI / GUI launchers on PATH.
+  - src: ./packaging/wrappers/osl
+    dst: /usr/bin/osl
+    file_info:
+      mode: 0755
+  - src: ./packaging/wrappers/osl-gui
+    dst: /usr/bin/osl-gui
+    file_info:
+      mode: 0755
+
+  # Menu entry for the GUI.
+  - src: ./packaging/opensilexlink.desktop
+    dst: /usr/share/applications/opensilexlink.desktop
+    file_info:
+      mode: 0644
+
+  # Privileged USB/IP helper (attach/detach/modprobe with strict arg validation).
+  - src: ./packaging/helper/silex-usbip-helper
+    dst: /usr/libexec/silex-usbip-helper
+    file_info:
+      mode: 0755
+
+  # polkit policy + rule (password-free attach/detach for administrators).
+  - src: ./packaging/polkit/org.opensilexlink.policy
+    dst: /usr/share/polkit-1/actions/org.opensilexlink.policy
+    file_info:
+      mode: 0644
+  - src: ./packaging/polkit/49-opensilexlink.rules
+    dst: /usr/share/polkit-1/rules.d/49-opensilexlink.rules
+    file_info:
+      mode: 0644

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=OpenSilexLink
+GenericName=Silex USB Device Server
+GenericName[de]=Silex USB-Device-Server
+Comment=Connect USB devices of a Silex USB device server
+Comment[de]=USB-Geräte eines Silex USB-Device-Servers verbinden
+Exec=osl-gui
+Icon=drive-removable-media-usb
+Terminal=false
+Categories=Network;
+Keywords=USB;Silex;USB/IP;Device Server;

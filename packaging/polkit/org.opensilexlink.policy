@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+
+  <vendor>OpenSilexLink (unofficial)</vendor>
+  <vendor_url>https://github.com/bytewarrior/OpenSilexLink</vendor_url>
+
+  <action id="org.opensilexlink.manage">
+    <description>Attach/detach an OpenSilexLink USB/IP device</description>
+    <description xml:lang="de">USB/IP-Gerät von OpenSilexLink verbinden/trennen</description>
+    <message>Authentication is required to attach/detach the USB device</message>
+    <message xml:lang="de">Zum Verbinden/Trennen des USB-Geräts wird eine Berechtigung benötigt</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <!-- _keep: after a one-time grant polkit caches the authorization for this
+           action for the session (~5 min) -> no prompt on every connect. -->
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <!-- Binds the action to exactly this helper path: pkexec /usr/libexec/
+         silex-usbip-helper then checks THIS action (with _keep) instead of the generic
+         org.freedesktop.policykit.exec. The path MUST match the installed helper. -->
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/silex-usbip-helper</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+  </action>
+
+</policyconfig>

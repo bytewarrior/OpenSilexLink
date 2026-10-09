@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""Privileged helper for the OpenSilexLink daemon (runs as root via pkexec).
+
+Wraps EXACTLY the three privileged operations the daemon needs and validates its
+arguments strictly. This lets the polkit rule cache the authorization
+(`auth_admin_keep`) without the cached authorization being usable for anything other
+than attach/detach/modprobe.
+
+    silex-usbip-helper attach -r <remote-ip> -b <busid>
+    silex-usbip-helper detach -p <port>
+    silex-usbip-helper modprobe
+
+Invoked as::
+
+    pkexec /usr/libexec/silex-usbip-helper attach -r 127.0.0.1 -b 1-1
+
+The policy `org.opensilexlink.manage` annotates exactly this path
+(`org.freedesktop.policykit.exec.path`) so pkexec evaluates our action (with
+`auth_admin_keep`) instead of the generic exec action.
+"""
+
+import os
+import re
+import sys
+
+# usbip/modprobe often live in sbin (not on a desktop PATH).
+_SEARCH_DIRS = ("/usr/sbin", "/sbin", "/usr/bin", "/bin",
+                "/usr/local/sbin", "/usr/local/bin")
+
+_BUSID_RE = re.compile(r"^[0-9]+-[0-9]+(\.[0-9]+)*$")   # e.g. 1-1, 3-4.2
+_IPV4_RE = re.compile(r"^[0-9]{1,3}(\.[0-9]{1,3}){3}$")
+
+
+def _resolve(prog: str) -> str:
+    for d in _SEARCH_DIRS:
+        cand = os.path.join(d, prog)
+        if os.path.exists(cand):
+            return cand
+    return prog
+
+
+def _die(msg: str) -> "NoReturn":  # type: ignore[name-defined]
+    sys.stderr.write(f"silex-usbip-helper: {msg}\n")
+    raise SystemExit(2)
+
+
+def _exec(argv: list[str]) -> "NoReturn":  # type: ignore[name-defined]
+    os.execv(argv[0], argv)   # replaces the process; only returns on failure
+    _die(f"execv failed: {argv[0]}")
+
+
+def main(argv: list[str]) -> None:
+    if not argv:
+        _die("no operation given")
+    op, rest = argv[0], argv[1:]
+
+    if op == "attach":
+        # expects exactly: -r <ip> -b <busid>
+        if len(rest) != 4 or rest[0] != "-r" or rest[2] != "-b":
+            _die("attach expects: -r <ip> -b <busid>")
+        remote, busid = rest[1], rest[3]
+        if not _IPV4_RE.match(remote):
+            _die(f"invalid remote IP: {remote!r}")
+        if not _BUSID_RE.match(busid):
+            _die(f"invalid busid: {busid!r}")
+        _exec([_resolve("usbip"), "attach", "-r", remote, "-b", busid])
+
+    if op == "detach":
+        if len(rest) != 2 or rest[0] != "-p":
+            _die("detach expects: -p <port>")
+        port = rest[1]
+        if not port.isdigit():
+            _die(f"invalid port: {port!r}")
+        _exec([_resolve("usbip"), "detach", "-p", port])
+
+    if op == "modprobe":
+        if rest:
+            _die("modprobe expects no arguments")
+        _exec([_resolve("modprobe"), "vhci-hcd"])
+
+    _die(f"unknown operation: {op!r}")
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

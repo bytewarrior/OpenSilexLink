@@ -1,0 +1,10 @@
+#!/usr/bin/python3
+# Launcher for the OpenSilexLink CLI, installed by the .deb/.rpm package.
+# The Python client ships under /usr/lib/opensilexlink (distro-independent, no
+# reliance on the site-packages layout); put it on sys.path and call main().
+import sys
+
+sys.path.insert(0, "/usr/lib/opensilexlink")
+from opensilexlink.cli import main  # noqa: E402
+
+sys.exit(main())
