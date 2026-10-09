@@ -1,0 +1,399 @@
+#  German catalog for OpenSilexLink.
+#  Source language (msgid) is English; msgstr is German.
+#  Compile with scripts/compile_translations.py.
+msgid ""
+msgstr ""
+"Project-Id-Version: opensilexlink\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# --- client.py: status / notices / columns / tray ---
+
+msgid "Connected by me"
+msgstr "Von mir verbunden"
+
+msgid "In use by {}"
+msgstr "Wird von {} verwendet"
+
+msgid "Available"
+msgstr "Verfügbar"
+
+msgid "Request sent ..."
+msgstr "Anforderung gesendet …"
+
+msgid "Request delivered - awaiting decision ..."
+msgstr "Anforderung zugestellt – warte auf Entscheidung …"
+
+msgid "The other side agreed - releasing the device ..."
+msgstr "Gegenstelle stimmt zu – Gerät wird freigegeben …"
+
+msgid "The request was denied."
+msgstr "Anforderung wurde abgelehnt."
+
+msgid "Device released - taking over ..."
+msgstr "Gerät freigegeben – übernehme …"
+
+msgid "Connecting ..."
+msgstr "Verbinde …"
+
+msgid "Device taken over."
+msgstr "Gerät übernommen."
+
+msgid "No response from the other side."
+msgstr "Keine Antwort von der Gegenstelle."
+
+msgid "Take-over failed."
+msgstr "Übernahme fehlgeschlagen."
+
+msgid "Connection lost - reconnecting ..."
+msgstr "Verbindung verloren – verbinde neu …"
+
+msgid "Reconnected automatically."
+msgstr "Automatisch neu verbunden."
+
+msgid "Automatic reconnect failed."
+msgstr "Automatische Wiederverbindung fehlgeschlagen."
+
+msgid "The device was taken over by another machine."
+msgstr "Gerät wurde von einem anderen Rechner übernommen."
+
+msgid "Connection lost."
+msgstr "Verbindung verloren."
+
+msgid "The device was removed - connection closed."
+msgstr "Gerät wurde entfernt – Verbindung getrennt."
+
+msgid "Request from another machine - releasing the device automatically ..."
+msgstr "Anfrage von einem anderen Rechner – Gerät wird automatisch freigegeben …"
+
+msgid "Device handed over to another machine automatically."
+msgstr "Gerät automatisch an einen anderen Rechner abgegeben."
+
+msgid "Type"
+msgstr "Typ"
+
+msgid "Model"
+msgstr "Modell"
+
+msgid "IP address"
+msgstr "IP-Adresse"
+
+msgid "IPv6 address"
+msgstr "IPv6-Adresse"
+
+msgid "Ethernet address"
+msgstr "Ethernet-Adresse"
+
+msgid "Connected"
+msgstr "Verbunden"
+
+msgid "Not connected"
+msgstr "Nicht verbunden"
+
+msgid "No device connected"
+msgstr "Kein Gerät verbunden"
+
+msgid "{} device connected"
+msgstr "{} Gerät verbunden"
+
+msgid "{} devices connected"
+msgstr "{} Geräte verbunden"
+
+# --- device type strings emitted by the daemon (usb_class) ---
+
+msgid "Mass storage device"
+msgstr "Speichergerät"
+
+msgid "Other USB device"
+msgstr "Sonstige USB-Geräte"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Mouse, Keyboard"
+msgstr "Maus, Tastatur"
+
+msgid "Imaging device"
+msgstr "Bildverarbeitungsgerät"
+
+msgid "Printer"
+msgstr "Drucker"
+
+msgid "Video"
+msgstr "Video"
+
+# --- options.py ---
+
+msgid "Options"
+msgstr "Optionen"
+
+msgid "General"
+msgstr "Allgemein"
+
+msgid "Search for device servers"
+msgstr "Nach Geräteservern suchen"
+
+msgid "Display"
+msgstr "Anzeige"
+
+msgid "Basic configuration"
+msgstr "Basiskonfiguration"
+
+msgid "Start on system startup"
+msgstr "Beim Start des Systems starten"
+
+msgid "Do not show the main window at startup"
+msgstr "Hauptfenster beim Programmstart nicht anzeigen"
+
+msgid "Show a notification on error"
+msgstr "Bei einem Fehler eine Benachrichtigung anzeigen"
+
+msgid "Show a confirmation when disconnecting USB devices"
+msgstr "Beim Trennen von USB-Geräten eine Bestätigung anzeigen"
+
+msgid "Automatically connect to newly detected USB devices"
+msgstr "Verbindung zu neu erkannten USB-Geräten automatisch herstellen"
+
+msgid "Hide the main window instead of quitting on close"
+msgstr "Hauptfenster ausblenden statt beenden beim Schließen"
+
+msgid "Refresh interval (3-60 s):"
+msgstr "Aktualisierungsintervall (3–60 s):"
+
+msgid "For NAPT/routing cases where the broadcast does not reach the device: explicit unicast addresses."
+msgstr "Für NAPT-/Routing-Fälle, in denen der Broadcast das Gerät nicht erreicht: gezielte Unicast-Adressen."
+
+msgid "Enable the following search addresses"
+msgstr "Folgende Suchadressen aktivieren"
+
+msgid "Address (IP)"
+msgstr "Adresse (IP)"
+
+msgid "Add"
+msgstr "Hinzufügen"
+
+msgid "Delete"
+msgstr "Löschen"
+
+msgid "List display"
+msgstr "Listenanzeige"
+
+msgid "Choose the information to show in the USB device list."
+msgstr "Wählen Sie die Informationen aus, die in der USB-Geräteliste angezeigt werden sollen."
+
+msgid "Move up"
+msgstr "Nach oben"
+
+msgid "Move down"
+msgstr "Nach unten"
+
+msgid "Show"
+msgstr "Anzeigen"
+
+msgid "Hide"
+msgstr "Ausblenden"
+
+msgid "Width of the selected column:"
+msgstr "Breite der ausgewählten Spalte:"
+
+msgid "Enable filter - only show checked device servers"
+msgstr "Filter aktivieren – nur markierte Geräteserver anzeigen"
+
+msgid "Properties of {}"
+msgstr "Eigenschaften von {}"
+
+msgid "device"
+msgstr "Gerät"
+
+msgid "Connect"
+msgstr "Verbinden"
+
+msgid "Disconnect"
+msgstr "Trennen"
+
+msgid "Details"
+msgstr "Detailinformationen"
+
+msgid "USB device name:"
+msgstr "Name des USB-Geräts:"
+
+msgid "Transfer speed:"
+msgstr "Übertragungsgeschwindigkeit:"
+
+msgid "Model:"
+msgstr "Modell:"
+
+msgid "IP address:"
+msgstr "IP-Adresse:"
+
+msgid "Ethernet address:"
+msgstr "Ethernet-Adresse:"
+
+msgid "Device server properties"
+msgstr "Eigenschaften des Geräteservers"
+
+msgid "Auto connect"
+msgstr "Auto Connect"
+
+msgid "Connect this device automatically when available"
+msgstr "Dieses Gerät bei Verfügbarkeit automatisch verbinden"
+
+msgid "Reconnect automatically after a connection error"
+msgstr "Bei einem Verbindungsfehler automatisch neu verbinden"
+
+msgid "Launch an application when connected"
+msgstr "Anwendung bei hergestellter Verbindung starten"
+
+msgid "Path to the application (optionally with arguments)"
+msgstr "Pfad zur Anwendung (optional mit Argumenten)"
+
+msgid "Browse..."
+msgstr "Durchsuchen…"
+
+msgid "Disconnect automatically when the application closes"
+msgstr "Verbindung beim Schließen der Anwendung automatisch trennen"
+
+msgid "Select application"
+msgstr "Anwendung auswählen"
+
+msgid "Allow automatic disconnect when use is requested"
+msgstr "Automatische Trennung zulassen, wenn eine Verwendung angefordert wird"
+
+msgid "If enabled, the connection is dropped - even while in use - as soon as\nanother machine requests the device. The timeout is the grace period\nafter which it is released automatically (0 = immediately)."
+msgstr "Ist dies aktiviert, wird die Verbindung getrennt – auch während der Nutzung –,\nsobald ein anderer Rechner das Gerät anfordert. Das Zeitlimit ist die Frist,\nnach der automatisch freigegeben wird (0 = sofort)."
+
+msgid "Timeout for automatic disconnect (s):"
+msgstr "Zeitlimit für automatische Trennung (s):"
+
+# --- app.py ---
+
+msgid "Connecting to daemon ..."
+msgstr "Verbinde mit Daemon …"
+
+msgid "Refresh"
+msgstr "Aktualisieren"
+
+msgid "Toggle views"
+msgstr "Ansichten umschalten"
+
+msgid "Toggle views (Alt+S)\nSwitches between the USB device view and the device server view."
+msgstr "Ansichten umschalten (Alt+S)\nSchaltet zwischen der USB-Geräteansicht und der Geräteserveransicht um."
+
+msgid "Settings"
+msgstr "Einstellungen"
+
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "Request use"
+msgstr "Verwendung anfordern"
+
+msgid "Properties..."
+msgstr "Eigenschaften…"
+
+msgid "No devices found"
+msgstr "Keine Geräte gefunden"
+
+msgid "Restore"
+msgstr "Wiederherstellen"
+
+msgid "Minimize"
+msgstr "Minimieren"
+
+msgid "Options..."
+msgstr "Optionen…"
+
+msgid "About Silex USB Device Server"
+msgstr "Info zu Silex USB Device Server"
+
+msgid "Quit"
+msgstr "Beenden"
+
+msgid "Still running in the notification area. Use the tray menu to quit."
+msgstr "Läuft im Infobereich weiter. Zum Beenden das Tray-Menü nutzen."
+
+msgid "Daemon not reachable and failed to start."
+msgstr "Daemon nicht erreichbar und Start fehlgeschlagen."
+
+msgid "Connected to daemon."
+msgstr "Mit Daemon verbunden."
+
+msgid "Could not start the application: {}"
+msgstr "Anwendung konnte nicht gestartet werden: {}"
+
+msgid "Could not start the application."
+msgstr "Anwendung konnte nicht gestartet werden."
+
+msgid "Application closed - disconnecting device ..."
+msgstr "Anwendung beendet – trenne Gerät …"
+
+msgid "the device"
+msgstr "das Gerät"
+
+msgid "Disconnect device"
+msgstr "Verbindung trennen"
+
+msgid "Disconnect from {}? Make sure the device is not in use before disconnecting."
+msgstr "Verbindung zu {} trennen? Vergewissern Sie sich vor der Trennung der Verbindung, dass das Gerät nicht verwendet wird."
+
+msgid "Do not show a confirmation message before disconnecting"
+msgstr "Vor dem Trennen der Verbindung keine Bestätigungsnachricht anzeigen"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nein"
+
+msgid "Connecting {} ..."
+msgstr "Verbinde {} …"
+
+msgid "Disconnecting {} ..."
+msgstr "Trenne {} …"
+
+msgid "Connected."
+msgstr "Verbunden."
+
+msgid "Disconnected."
+msgstr "Getrennt."
+
+msgid "Device connected."
+msgstr "Gerät verbunden."
+
+msgid "Device disconnected."
+msgstr "Gerät getrennt."
+
+msgid "Error."
+msgstr "Fehler."
+
+msgid "Error"
+msgstr "Fehler"
+
+msgid "{} failed:\n{}"
+msgstr "{} fehlgeschlagen:\n{}"
+
+msgid "{} failed."
+msgstr "{} fehlgeschlagen."
+
+msgid "Lost connection to the daemon."
+msgstr "Verbindung zum Daemon verloren."
+
+msgid "Requesting {} ..."
+msgstr "Fordere {} an …"
+
+msgid "{} wants to use \"{}\"."
+msgstr "{} möchte „{}“ verwenden."
+
+msgid "{} wants to use \"{}\".\n\nDisconnect and release the device?"
+msgstr "{} möchte „{}“ verwenden.\n\nVerbindung trennen und das Gerät freigeben?"
+
+msgid "The other side denied the request."
+msgstr "Die Gegenstelle hat die Anforderung abgelehnt."
+
+msgid "Select a device in the tree and Connect/Disconnect - or use the right-click menu or the tray icon.\n\nIf a device is held by another host, you can use \"Request use\"; the holding machine is asked.\n\nThe background service keeps the connection even when this window is closed - the app then keeps running in the notification area."
+msgstr "Gerät im Baum wählen und Verbinden/Trennen – oder per Rechtsklick bzw. über das Tray-Symbol.\n\nIst ein Gerät fremd belegt, kann man „Verwendung anfordern“ nutzen; der haltende Rechner wird gefragt.\n\nDer Hintergrunddienst hält die Verbindung, auch wenn dieses Fenster geschlossen wird – die App läuft dann im Infobereich weiter."
+
+msgid "Open replacement for SX Virtual Link for Silex USB device servers (USB-over-Ethernet).\nUses USB/IP (vhci-hcd) and a local background service."
+msgstr "Offener Ersatz für SX Virtual Link für Silex-USB-Geräteserver (USB-over-Ethernet).\nNutzt USB/IP (vhci-hcd) und einen lokalen Hintergrunddienst."

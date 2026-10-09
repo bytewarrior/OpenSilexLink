@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opensilexlink"
+version = "1.0.0"
+description = "OpenSilexLink desktop client (PySide6 GUI) for Silex USB device servers"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "bytewarrior" }]
+dependencies = []
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.5"]
+
+[project.scripts]
+osl = "opensilexlink.cli:main"
+osl-gui = "opensilexlink.gui.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+# Ship the compiled gettext catalogs (English is the source language, so only
+# non-English catalogs are shipped here).
+opensilexlink = ["locale/*/LC_MESSAGES/*.mo"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
