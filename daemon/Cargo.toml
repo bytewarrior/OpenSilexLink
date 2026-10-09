@@ -1,0 +1,29 @@
+[package]
+name = "silex-daemon"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.75"
+description = "OpenSilexLink daemon: Silex DS-510 (USB-over-Ethernet) to USB/IP bridge"
+license = "MIT"
+repository = "https://github.com/bytewarrior/OpenSilexLink"
+default-run = "silex-daemon"
+
+[[bin]]
+name = "silex-daemon"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1", features = [
+    "rt-multi-thread", "macros", "net", "process", "time", "sync", "io-util", "signal",
+] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+thiserror = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+dns-lookup = "2"
+hex = "0.4"
+
+[dev-dependencies]
+# (unit tests use only std + the crates above)
